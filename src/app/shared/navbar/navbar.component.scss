@@ -2,3 +2,43 @@
 .text-adms{
     color: white;
 }
+.nav-link{
+    position: relative!important;
+    vertical-align: middle!important;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: center!important;
+
+}
+.nav-link::after{
+    content: '';
+    position: absolute!important;
+    left: 0!important;
+    bottom: -4px!important;
+    height: 3px!important;
+    width: 0px!important;
+    border-radius: 2px;
+    background-color: deepskyblue!important;
+    transition: (0.4s ease )!important;
+}
+.nav-link:hover::after{
+    width: 100%!important;
+}
+// .button{
+//     border: solid 1px invert($color: #ffffff)!important;
+// }
+// .button:active{
+//     border: none!important;
+// }
+
+.active::after{
+    content: '';
+    position: absolute!important;
+    left: 0!important;
+    bottom: -4px!important;
+    height: 3px!important;
+    width: 100%!important;
+    border-radius: 2px;
+    background-color: deepskyblue!important;
+    transition: (0.4s ease )!important;
+}
