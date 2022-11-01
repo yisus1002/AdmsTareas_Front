@@ -1,3 +1,4 @@
+import { CatalogsComponent } from './pages/catalogs/catalogs.component';
 import { TableComponent } from './shared/table/table.component';
 import { MaterialModule } from './material.module';
 import { NgModule } from '@angular/core';
@@ -20,7 +21,8 @@ import { LoadingComponent } from './shared/loading/loading.component';
     HomeComponent,
     NavbarComponent,
     TableComponent,
-    LoadingComponent
+    LoadingComponent,
+    CatalogsComponent
     
   ],
   imports: [
@@ -30,6 +32,7 @@ import { LoadingComponent } from './shared/loading/loading.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     NgxChildProcessModule,
   ],
