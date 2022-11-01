@@ -34,8 +34,8 @@ export class AdmstareasService {
   getCatalogue():Observable<any>{
     return (this.http.get<any>(`${this.api}catalogue`));
   }
-  postCatalogue(name:string):Observable<any>{
-    return (this.http.post<any>(`${this.api}catalogue`,{name}));
+  postCatalogue(name:object):Observable<any>{
+    return (this.http.post<any>(`${this.api}catalogue`,name));
   }
 
   delCatalogue(id:number):Observable<any>{

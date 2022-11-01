@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ControlersService implements AfterViewInit {
 
   public   datos: Processys[]=[];
-  public options:number[]=[5,10,25, 100];
+  public options:number[]=[];
   public loading:boolean=false; 
 
   dataSource= new MatTableDataSource<Processys>();
@@ -36,6 +36,7 @@ export class ControlersService implements AfterViewInit {
         this.datos=data?.body?.response;
         console.log(data);
         this.dataSource.data=this.datos; 
+        this.options=[5,10,25, 100]
         this.options=[...this.options,(data?.body?.count)] 
         console.log(this.dataSource)
       }),
@@ -46,6 +47,7 @@ export class ControlersService implements AfterViewInit {
   }
   ObtenerProccess(){
     this.loading=false;
+    // this.options= this.options;
     this._sAdms.postProcessys()
     .pipe(finalize(()=>{
       this.listProcess();
@@ -60,7 +62,7 @@ export class ControlersService implements AfterViewInit {
     })
   }
 
-  crateCatalogue(name:string){
+  crateCatalogue(name:object){
     this._sAdms.postCatalogue(name)
     .subscribe({
       next: ((data:any)=>{
