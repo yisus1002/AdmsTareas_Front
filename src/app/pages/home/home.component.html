@@ -1,7 +1,11 @@
-<!-- <button mat-raised-button color="primary">Primary</button> -->
 <div class="header">
-    <div class="container-fluid">
-      <app-table></app-table>
+  <div class="container-fluid">
+     <div class="d-flex flex-row-reverse">
+       <button class="m-2 order-1" mat-raised-button color="warn" (click)="reloadProcessys()" >Reload processes</button>
+       <button class="m-2 order-2" mat-raised-button color="accent" >Create a catalog</button>
+     </div>
+      <app-loading *ngIf="_controService.loading===false"></app-loading>
+      <app-table   *ngIf="_controService.loading"></app-table>
   </div>
 
     <div>

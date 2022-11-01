@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgxChildProcessModule } from 'ngx-childprocess';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { NgxChildProcessModule } from 'ngx-childprocess';
     HomeComponent,
     NavbarComponent,
     TableComponent,
+    LoadingComponent
     
   ],
   imports: [

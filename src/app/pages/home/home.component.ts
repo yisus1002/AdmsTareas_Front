@@ -1,3 +1,4 @@
+import { ControlersService } from './../../services/controlers.service';
 import { AdmstareasService } from './../../services/admstareas.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _admsService: AdmstareasService) { 
+  constructor(private _admsService: AdmstareasService,
+              public _controService: ControlersService) { 
 
     // this._admsService
     // this._admsService.getAdms().subscribe((adms:any)=>
@@ -16,6 +18,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._controService.listProcess();
   }
-
+  reloadProcessys(){
+    this._controService.ObtenerProccess();
+  }
 }
