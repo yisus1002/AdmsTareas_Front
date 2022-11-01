@@ -10,46 +10,46 @@
          [dataSource]="_contr.dataSource" matSort>
       
           <!-- ID Column -->
-          <ng-container matColumnDef="pid">
+          <ng-container matColumnDef="PID">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>PID</th>
-            <td mat-cell *matCellDef="let row"> {{row?.PID}} </td>
+            <td mat-cell *matCellDef="let processys"> {{processys?.PID}} </td>
           </ng-container>
     
           <!-- Name Column -->
-          <ng-container matColumnDef="namep">
+          <ng-container matColumnDef="nombreDeImagen">
             <th mat-header-cell *matHeaderCellDef mat-sort-header > NAME</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.nombreDeImagen}} </td>
           </ng-container>
     
           <!-- Name Column -->
-          <ng-container matColumnDef="user">
+          <ng-container matColumnDef="nombreDeUsuario">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> USER</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.nombreDeUsuario}} </td>
           </ng-container>
     
           <!-- prioridad Column -->
-          <ng-container matColumnDef="sessionName">
+          <ng-container matColumnDef="nombreDeSesion">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>NAME S</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.nombreDeSesion}} </td>
           </ng-container>
       
           <!-- descripcion Column -->
-          <ng-container matColumnDef="windowTitle">
+          <ng-container matColumnDef="tituloDeVentana">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>TITLE W</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.tituloDeVentana}} </td>
           </ng-container>
           <!-- descripcion Column -->
-          <ng-container matColumnDef="memoryUsage">
+          <ng-container matColumnDef="usoDeMemoria">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>MEMORY</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.usoDeMemoria}} </td>
           </ng-container>
           <!-- descripcion Column -->
-          <ng-container matColumnDef="state">
+          <ng-container matColumnDef="estado">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>STATE</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.estado}} </td>
           </ng-container>
           <!-- descripcion Column -->
-          <ng-container matColumnDef="session">
+          <ng-container matColumnDef="numDeSesion">
             <th mat-header-cell *matHeaderCellDef mat-sort-header># SESSION</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.numDeSesion}} </td>
           </ng-container>
@@ -60,15 +60,20 @@
           </ng-container>
       
           <!-- descripcion Column -->
-          <ng-container matColumnDef="cputime">
+          <ng-container matColumnDef="tiempoDeCpu">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>CPU</th>
             <td mat-cell *matCellDef="let  processys"> {{ processys?.tiempoDeCpu}} </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef >OPTIONS</th>
+            <td mat-cell *matCellDef="let  processys;let i = index;">{{i + 1}} </td>
           </ng-container>
           <!-- descripcion Column -->
 
       
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let processys; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let processys; columns: displayedColumns; let i = index"></tr>
 
           <!-- Row shown when there is no matching data. -->
           <tr class="mat-row" *matNoDataRow>

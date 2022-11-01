@@ -10,7 +10,18 @@ import {MatSort} from '@angular/material/sort';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, AfterViewInit{ 
-  displayedColumns: string[] = ['pid','namep','user','state', 'session','quantum', 'cputime', 'memoryUsage' ,'windowTitle','sessionName'];
+  displayedColumns: string[] = [
+                                'PID',
+                                'nombreDeImagen',
+                                'nombreDeUsuario',
+                                'estado', 
+                                'numDeSesion',
+                                'quantum', 
+                                'tiempoDeCpu',
+                                'usoDeMemoria',
+                                'tituloDeVentana',
+                                'nombreDeSesion',
+                                'options'];
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
