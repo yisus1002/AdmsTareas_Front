@@ -1,3 +1,4 @@
+import { FormulariocatalogComponent } from './shared/formulariocatalog/formulariocatalog.component';
 import { CatalogsComponent } from './pages/catalogs/catalogs.component';
 import { TableComponent } from './shared/table/table.component';
 import { MaterialModule } from './material.module';
@@ -14,6 +15,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgxChildProcessModule } from 'ngx-childprocess';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { LoadingComponent } from './shared/loading/loading.component';
     NavbarComponent,
     TableComponent,
     LoadingComponent,
-    CatalogsComponent
+    CatalogsComponent,
+    FormulariocatalogComponent,
     
   ],
   imports: [
@@ -35,6 +38,12 @@ import { LoadingComponent } from './shared/loading/loading.component';
     FormsModule,
     HttpClientModule,
     NgxChildProcessModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 1500,
+      progressBar: true,
+
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
