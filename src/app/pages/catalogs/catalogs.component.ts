@@ -1,5 +1,4 @@
-import { ControlersService } from './../../services/controlers.service';
-import { AdmstareasService } from './../../services/admstareas.service';
+import { ControlersService } from './../../services/controlers.service'; 
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatalogsComponent implements OnInit {
 
-  constructor( private _sAdms: AdmstareasService,
-               private _sContr: ControlersService) {
-                this.loadCatalog();
+
+  constructor( 
+               public _sContr: ControlersService) {
+                this._sContr.loadCatalog();
                 }
 
   ngOnInit(): void {
@@ -21,18 +21,5 @@ export class CatalogsComponent implements OnInit {
     this._sContr.crateCatalogue(name);
   }
 
-  loadCatalog(){
-    this._sAdms.getCatalogue()
-    .subscribe({
-      next: ((data:any)=>{
-        console.log(data);
-      }),
-      error: ((error:any)=>{
-        console.log(error);
-        
-      })
-    })
-  }
-
-
+ 
 }

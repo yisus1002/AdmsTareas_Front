@@ -1,0 +1,25 @@
+.card-hover:hover{
+    scale: (1.1);
+    z-index: 3;
+    transition-duration: 300ms;
+}
+.card-hover{
+    transition-duration: 300ms;
+    cursor: pointer;
+    position: relative!important;
+}
+.cardbutton{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    // border: solid 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition-duration: 300ms;
+}
+.cardbutton:hover{
+    opacity: 1;
+    transition-duration: 300ms;
+}

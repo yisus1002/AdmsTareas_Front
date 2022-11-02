@@ -1,3 +1,47 @@
 <div class="container mt-2">
     <h1 class="h1 text-capitalize">catalogs</h1>
+    <div class="mt-2 card-body"> 
+          <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2">
+            <div class="col" *ngFor="let catalog of _sContr.catalogs; let i = index;">
+              <div class="card border-0 shadow p-0 card-hover" >
+                <div class="card-body p-1">
+                  <h3 class="card-title text-center">{{catalog?.name }}</h3>
+                  <p class="card-text">Proccesses <small>{{catalog?.Processes.length}}</small></p>
+                </div>
+                <div class="card-footer">
+                  <small class="text-muted"><strong>Created</strong> {{catalog?.createdAt | date:'medium'}}</small>
+                  <br>
+                  <small class="text-muted"><strong>Updated</strong> {{catalog?.updatedAt | date:'medium'}}</small>
+                </div>
+                <div class="cardbutton">
+                   <button type="button" class="m-1" mat-stroked-button mat-icon-button >
+                      <mat-icon style="color: rgb(0, 204, 255);">remove_red_eye</mat-icon>
+                   </button>
+                   <button type="button"
+                           class="m-1"
+                           mat-stroked-button
+                           mat-icon-button
+                           data-bs-toggle="modal"
+                           data-bs-target="#modalCreate"
+                           (click)="_sContr.edit(catalog)"
+                           >
+                      <mat-icon style="color: brown;">create</mat-icon>
+                   </button>
+                   <button type="button" class="m-1"
+                           mat-stroked-button 
+                           mat-icon-button 
+                           (click)="_sContr.delete(catalog?.id)"
+                           >
+                      <mat-icon  style="color: rgb(243, 17, 25);">remove_circle_outline</mat-icon>
+                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div *ngIf="_sContr.catalogs.length===0" class=" d-flex" style="height: 30vh;">
+        <p class="text-center h4 " style="margin: auto ;">You have no catalogs created!</p>
+      </div>
 </div>
+
+<app-formulariocatalog namefor="Edit"></app-formulariocatalog>
