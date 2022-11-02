@@ -1,0 +1,50 @@
+<!-- Modal -->
+<div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header px-3 pt-2  pb-0 m-0">
+          <h1 class="modal-title fs-5" id="modalCreateLabel">{{namefor}} catalog</h1>
+          <button type="button"  
+                  style="border: none;box-shadow: none;" 
+                  class="btn-close " data-bs-dismiss="modal" 
+                  aria-label="Close"
+                  (click)="loadForm('')"
+                  ></button>
+        </div>
+        <form class="modal-body mt-0 col-12 d-flex  flex-wrap"
+              [formGroup]="_controService.forma" 
+              (ngSubmit)="createCata()" 
+                                  >
+          <mat-form-field class="example-full-width col-12" appearance="fill">
+            <mat-label>Catalog name</mat-label>
+            <input matInput 
+                    #message maxlength="256" 
+                    placeholder="Ex. Catalog"
+                    formControlName="name"
+                    type="text"
+                    >
+            <mat-hint align="start"><strong>Enter a description</strong> </mat-hint>
+            <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+            <mat-error *ngIf="nameNovalid">
+              Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <button type="button"
+                  mat-raised-button 
+                  class="btn  mx-1 btn-secondary"
+                  data-bs-dismiss="modal"
+                  (click)="loadForm('')"
+                  >Close</button>
+          <button type="submit" 
+                  mat-raised-button 
+                  class="btn  mx-1 btn-primary"
+                  data-bs-dismiss="modal"
+                  [class.disabled]="message.value.length<4" 
+                  >Save changes
+          </button>
+        </form>
+        <!-- <div class="modal-footer"> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
