@@ -1,29 +1,31 @@
 import { AdmstareasService } from 'src/app/services/admstareas.service';
-import { Injectable,  AfterViewInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { finalize } from 'rxjs';
 import { Processys } from '../models/interfaces/processys';
 import { MatTableDataSource } from '@angular/material/table'; 
+import { FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ControlersService implements AfterViewInit {
+export class ControlersService {
 
   public   datos: Processys[]=[];
   public options:number[]=[];
   public loading:boolean=false; 
+  public catalogo:any;
+  public catalogs:any[]=[];
+  public forma !:FormGroup;
 
   dataSource= new MatTableDataSource<Processys>();
   
   
-  constructor(private _sAdms: AdmstareasService) {
+  constructor(private _sAdms: AdmstareasService,
+    private toastr: ToastrService) {
     // this.listProcess();
    }
-  ngAfterViewInit(): void {
-    
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-  }
+ 
 
   listProcess(){
     this.loading=false;
@@ -33,21 +35,18 @@ export class ControlersService implements AfterViewInit {
     }))
     .subscribe({
       next: ((data:any)=>{ 
-        this.datos=data?.body?.response;
-        console.log(data);
+        this.datos=data?.body?.response; 
         this.dataSource.data=this.datos; 
         this.options=[5,10,25, 100]
         this.options=[...this.options,(data?.body?.count)] 
-        console.log(this.dataSource)
       }),
       error: ((error:any)=>{
-        console.log(error);
+        this.showToastr_error((error?.message))  
       })
     })
   }
   ObtenerProccess(){
     this.loading=false;
-    // this.options= this.options;
     this._sAdms.postProcessys()
     .pipe(finalize(()=>{
       this.listProcess();
@@ -57,7 +56,7 @@ export class ControlersService implements AfterViewInit {
         console.log(data)
       }),
       error: ((error:any)=>{
-        console.log(error);
+       this.showToastr_error((error?.message))  
       })
     })
   }
@@ -65,12 +64,59 @@ export class ControlersService implements AfterViewInit {
   crateCatalogue(name:object){
     this._sAdms.postCatalogue(name)
     .subscribe({
-      next: ((data:any)=>{
-        console.log(data)
+      next: ((data:any)=>{ 
+        this.showToastr_success(data.message)
       }),
       error:((error:any)=>{
-        console.log(error)
+        this.showToastr_error((error?.message))  
       })
     })
+  }
+
+  edit(catalogo:any){ 
+    this.catalogo=catalogo;
+    this.forma.reset({
+      name:this.catalogo.name
+    })
+  }
+
+  loadCatalog(){
+    this._sAdms.getCatalogue()
+    .pipe(finalize(()=>{ 
+
+    }))
+    .subscribe({
+      next: ((data:any)=>{  
+        this.catalogs=data;
+      }),
+      error: ((error:any)=>{
+        this.showToastr_error((error?.message))  
+      })
+    })
+  }
+
+  delete(id:number){
+    this._sAdms.delCatalogue(id)
+    .pipe(
+      finalize(()=>{
+        this.loadCatalog()
+      })
+    )
+    .subscribe({
+      next: ((data:any)=>{
+        this.showToastr_success(data.message)
+      }),
+      error: ((error:any)=>{
+        this.showToastr_error(error.message)
+      })
+    })
+  }
+
+  // toast ---------------------------
+  showToastr_success(title:string){
+    this.toastr.success(`${title}`)
+  }
+  showToastr_error(title:any){
+    this.toastr.error(`${title}`)
   }
 }
