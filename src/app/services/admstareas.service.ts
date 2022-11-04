@@ -1,3 +1,4 @@
+import { Processes } from './../models/interfaces/processes';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
@@ -20,11 +21,17 @@ export class AdmstareasService {
   }
   
   
-  getProcess():Observable<any>{
+  getProcess():Observable<Processes[]>{
     return (this.http.get<any>(`${this.api}process`));
   }
   getProcessById(id:number):Observable<any>{
     return (this.http.get<any>(`${this.api}process/${id}`));
+  }
+  postProcess(processes:Processys, idCtalg:number):Observable<any>{
+    return (this.http.post<any>(`${this.api}process/${idCtalg}`, processes));
+  }
+  putProcess(idProcesses:number,processes:object):Observable<any>{
+    return (this.http.put<any>(`${this.api}process/${idProcesses}`, processes));
   }
   delProcess(id:number):Observable<any>{
     return (this.http.delete<any>(`${this.api}process/${id}`));
@@ -34,6 +41,9 @@ export class AdmstareasService {
   
   getCatalogue():Observable<any>{
     return (this.http.get<any>(`${this.api}catalogue`)).pipe(map((data:any)=>data?.body));
+  }
+  getCataloogueById(id:number):Observable<any>{
+    return (this.http.get<any>(`${this.api}catalogue/${id}`)).pipe(map((data:any)=>data?.body));
   }
   postCatalogue(name:object):Observable<any>{
     return (this.http.post<any>(`${this.api}catalogue`,name));

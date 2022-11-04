@@ -5,6 +5,7 @@ import { Processys } from '../models/interfaces/processys';
 import { MatTableDataSource } from '@angular/material/table'; 
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -96,20 +97,34 @@ export class ControlersService {
   }
 
   delete(id:number){
-    this._sAdms.delCatalogue(id)
-    .pipe(
-      finalize(()=>{
-        this.loadCatalog()
-      })
-    )
-    .subscribe({
-      next: ((data:any)=>{
-        this.showToastr_success(data.message)
-      }),
-      error: ((error:any)=>{
-        this.showToastr_error(error.message)
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      position: 'top-end',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._sAdms.delCatalogue(id)
+        .pipe(
+          finalize(()=>{
+            this.loadCatalog()
+          })
+        )
+        .subscribe({
+          next: ((data:any)=>{
+            this.showToastr_success(data.message)
+          }),
+          error: ((error:any)=>{
+            this.showToastr_error(error.message)
+          })
+        })
+      }
     })
+
   }
 
   // toast ---------------------------
@@ -119,4 +134,5 @@ export class ControlersService {
   showToastr_error(title:any){
     this.toastr.error(`${title}`)
   }
+
 }
