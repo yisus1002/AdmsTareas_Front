@@ -14,7 +14,12 @@
                   <small class="text-muted"><strong>Updated</strong> {{catalog?.updatedAt | date:'medium'}}</small>
                 </div>
                 <div class="cardbutton">
-                   <button type="button" class="m-1" mat-stroked-button mat-icon-button >
+                   <button type="button" 
+                          class="m-1" 
+                          mat-stroked-button 
+                          mat-icon-button 
+                          (click)="viewCatalog(catalog?.id)"
+                          >
                       <mat-icon style="color: rgb(0, 204, 255);">remove_red_eye</mat-icon>
                    </button>
                    <button type="button"

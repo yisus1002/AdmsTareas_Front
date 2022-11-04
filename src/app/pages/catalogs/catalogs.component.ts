@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ControlersService } from './../../services/controlers.service'; 
 import { Component, OnInit } from '@angular/core';
 
@@ -8,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CatalogsComponent implements OnInit {
 
-
+  
   constructor( 
-               public _sContr: ControlersService) {
+               public _sContr: ControlersService,
+               private router:Router) {
                 this._sContr.loadCatalog();
                 }
 
@@ -19,6 +21,10 @@ export class CatalogsComponent implements OnInit {
 
   creteCatalog(name: object){
     this._sContr.crateCatalogue(name);
+  }
+
+  viewCatalog(id:number){
+    this.router.navigate(['/catalogs-detail', id])
   }
 
  
