@@ -1,0 +1,45 @@
+$hed-color:#202222;
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 10%!important;
+  }
+//   :host ::ng-deep .ng-container td{
+//      color: red;
+//      border: solid red;
+//    }  
+.mat-cell {
+    // color: red;
+    text-align: start;
+}
+.example-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+  }
+th{
+  background-color: $hed-color;
+  color: #ffff;
+  font-weight: 600;
+}
+// .cdk-overlay-container{
+  // z-index: 200!important;
+// }
+
+
+.modal{
+  z-index: 0!important;
+}
+// :host ::ng-deep .modal-backdrop  {
+//     z-index: 0!important;
+// }
+h1{
+  opacity: 1!important;
+}
