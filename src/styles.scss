@@ -93,4 +93,18 @@ display: inline-block;
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
+ .modal-backdrop {
+    // --bs-backdrop-zindex: 0!important; 
+    --bs-backdrop-bg: rgba(136, 29, 29, 0);
+    --bs-backdrop-opacity: 1!important;
+    // position: absolute!important;
+    // top: 0;
+    // left: 0;
+    z-index: -2!important;
+    //  width: 0!important; 
+    //  height: 0!important; 
+    //  background-color: var(--bs-backdrop-bg);
+    opacity: 1!important;
+    // width: 0px!important;
+    // height: 0px!important;
+  }

@@ -16,6 +16,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgxChildProcessModule } from 'ngx-childprocess';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { ToastrModule } from 'ngx-toastr';
+import { CatalogsDetailComponent } from './pages/catalogs-detail/catalogs-detail.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
     TableComponent,
     LoadingComponent,
     CatalogsComponent,
+    CatalogsDetailComponent,
     FormulariocatalogComponent,
     
   ],
