@@ -6,6 +6,37 @@
      </div>
       <app-loading *ngIf="_controService.loading===false"></app-loading>
       <app-table   *ngIf="_controService.loading"></app-table>
+      <div *ngIf="_controService.seleccionProcess.length>0" class="opciones  shadow slide-in-blurred-left p-2  " >
+        <h3 class="m-0" style="font-weight:bold ; color: rgb(33, 103, 29);">Selected processes</h3>
+        <div class="contai overflow-auto">
+          <div class="col" >
+            <p class="text-start tracking-in-expand" *ngFor="let Selectedprocesses of _controService.seleccionProcess">{{Selectedprocesses?.nombreDeImagen}}  {{Selectedprocesses?.PID}}</p>
+          </div> 
+        </div>
+        
+        <p class="text-danger" *ngIf=" _controService.catalog.length===0">You must create a catalog!</p>
+        <form *ngIf=" _controService.catalog.length>0"
+        [formGroup]="formu"
+        (ngSubmit)=" submit()"
+        class="col">
+          <h4 class="m-0" style="font-weight:bold ; color: rgb(33, 103, 29);">Assign catalog</h4>
+          <mat-form-field class="example-full-width"appearance="fill">
+            <mat-label>select the catalog</mat-label>
+            <mat-select style="position: relative;" formControlName="catalogueId" >
+              <mat-option  z-index="1056" *ngFor="let catalog of _controService.catalog" [value]="catalog?.id">
+                {{catalog?.name}}
+              </mat-option>                 
+            </mat-select> 
+            <mat-error *ngIf="nameNovalid">
+              catalog is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <div class="col">
+            <button type="submit" class="mx-1 btn-success btn" mat-raised-button style="font-weight: bold;">Assign</button>
+            <button type="button" class="mx-1 btn-secondary btn" (click)="cancel()" mat-raised-button style="font-weight: bold;">Cancel</button>
+          </div>
+        </form>
+      </div>
   </div>
 
     <div>
@@ -27,49 +58,3 @@
 
 <!-- Modal -->
 <app-formulariocatalog namefor="Create"></app-formulariocatalog>
-<!-- <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header px-3 pt-2  pb-0 m-0">
-        <h1 class="modal-title fs-5" id="modalCreateLabel">Create catalog</h1>
-        <button type="button"  
-                style="border: none;box-shadow: none;" 
-                class="btn-close " data-bs-dismiss="modal" 
-                aria-label="Close"
-                (click)="loadForm()"
-                ></button>
-      </div>
-      <form class="modal-body mt-0 col-12 d-flex  flex-wrap"
-            [formGroup]="forma" 
-            (ngSubmit)="createCata()" 
-                                >
-        <mat-form-field class="example-full-width col-12" appearance="fill">
-          <mat-label>Catalog name</mat-label>
-          <input matInput 
-                  #message maxlength="256" 
-                  placeholder="Ex. Catalog"
-                  formControlName="name"
-                  type="text"
-                  >
-          <mat-hint align="start"><strong>Enter a description</strong> </mat-hint>
-          <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
-          <mat-error *ngIf="nameNovalid">
-            Name is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-        <button type="button"
-                mat-raised-button 
-                class="btn  mx-1 btn-secondary"
-                data-bs-dismiss="modal"
-                (click)="loadForm()"
-                >Close</button>
-        <button type="submit" 
-                mat-raised-button 
-                class="btn  mx-1 btn-primary"
-                data-bs-dismiss="modal"
-                [class.disabled]="message.value.length<4" 
-                >Save changes</button>
-      </form> 
-    </div>
-  </div>
-</div> -->

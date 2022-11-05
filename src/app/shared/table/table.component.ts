@@ -1,8 +1,8 @@
 import { ControlersService } from './../../services/controlers.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
 import {AfterViewInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort'; 
+import {MatSort} from '@angular/material/sort';  
 
 @Component({
   selector: 'app-table',
@@ -24,27 +24,19 @@ export class TableComponent implements OnInit, AfterViewInit{
                                 'options'];
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort!: MatSort; 
 
-  constructor(
-    // private _sAdms: AdmstareasService,
+  constructor( 
     public _contr: ControlersService,
   ) { 
-
   }
-  ngOnInit(): void {
-    
-    // this.ObtenerProccess()
-    // this._contr.listProcess()
-  }
+  ngOnInit(): void {}
 
   
 
   ngAfterViewInit() {
     this._contr.dataSource.paginator = this.paginator;
-    this._contr.dataSource.sort = this.sort;
-    // console.log(this._contr.dataSource)
-    
+    this._contr.dataSource.sort = this.sort; 
   }
 
   applyFilter(event: Event) {
@@ -55,4 +47,13 @@ export class TableComponent implements OnInit, AfterViewInit{
       this._contr.dataSource.paginator.firstPage();
     }
   }
+
+    seleccc(processys:any){ 
+      if(this._contr.selection.isSelected(processys)===false){
+        this._contr.seleccionProcess.push(processys) 
+      }else{ 
+        const newSeleccionProcess = this._contr.seleccionProcess.filter((data:any)=>parseInt(processys?.PID) != parseInt(data?.PID))
+        this._contr.seleccionProcess=newSeleccionProcess;  
+      } 
+    }
 }

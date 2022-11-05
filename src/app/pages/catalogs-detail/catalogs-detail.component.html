@@ -120,7 +120,7 @@
               <mat-form-field class="example-full-width"appearance="fill">
                 <mat-label>Change catalog processes ?</mat-label>
                 <mat-select style="position: relative;" formControlName="catalogueId" name="catalog">
-                  <mat-option  z-index="1056" *ngFor="let catalog of catalog" [value]="catalog?.id">
+                  <mat-option  z-index="1056" *ngFor="let catalog of _sContr.catalog" [value]="catalog?.id">
                     {{catalog?.name}}
                   </mat-option>                 
                 </mat-select> 

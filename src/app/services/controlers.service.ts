@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,14 @@ export class ControlersService {
   public loading:boolean=false; 
   public catalogo:any;
   public catalogs:any[]=[];
+  
+  public catalog: any[] = [];
   public forma !:FormGroup;
 
   dataSource= new MatTableDataSource<Processys>();
-  
-  
+  public selection = new SelectionModel<Processys>(true, []);
+  public seleccionProcess:any[]=[];
+
   constructor(private _sAdms: AdmstareasService,
     private toastr: ToastrService) {
     // this.listProcess();
@@ -64,6 +68,9 @@ export class ControlersService {
 
   crateCatalogue(name:object){
     this._sAdms.postCatalogue(name)
+    .pipe(finalize(()=>{
+      this.getCatalogs()
+    }))
     .subscribe({
       next: ((data:any)=>{ 
         this.showToastr_success(data.message)
@@ -133,6 +140,19 @@ export class ControlersService {
   }
   showToastr_error(title:any){
     this.toastr.error(`${title}`)
+  }
+
+  getCatalogs(){
+    this._sAdms.getCatalogue() 
+    .subscribe({
+      next: (data:any[])=>{ 
+        const da = data.map(({id, name})=>({'id':id, 'name':name})) 
+        this.catalog=da;
+      },
+      error:(error:any)=>{
+        this.showToastr_error(error.message)
+      }       
+    })
   }
 
 }

@@ -39,11 +39,11 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
   public id_processes!:number;
   public catalogDetail:any;
   public forma !:FormGroup;
-  public catalog: any[] = [];
+  // public catalog: any[] = [];
 
   
   constructor( 
-    private _sContr: ControlersService,
+    public _sContr: ControlersService,
     private _sAdms: AdmstareasService,
     private activateRoute:ActivatedRoute,
     private form: FormBuilder,
@@ -58,7 +58,7 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-     this.getCatalogs();
+     this._sContr.getCatalogs();
   }
 
   getCatalog(id:number){
@@ -72,18 +72,6 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
       error: ((error)=>{
         this._sContr.showToastr_error((error.message));
       })
-    })
-  }
-  getCatalogs(){
-    this._sAdms.getCatalogue() 
-    .subscribe({
-      next: (data:any[])=>{ 
-        const da = data.map(({id, name})=>({'id':id, 'name':name})) 
-        this.catalog=da;
-      },
-      error:(error:any)=>{
-        this._sContr.showToastr_error(error.message)
-      }       
     })
   }
   changeCatalog(){ 

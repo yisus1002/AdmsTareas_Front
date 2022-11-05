@@ -27,7 +27,7 @@ export class AdmstareasService {
   getProcessById(id:number):Observable<any>{
     return (this.http.get<any>(`${this.api}process/${id}`));
   }
-  postProcess(processes:Processys, idCtalg:number):Observable<any>{
+  postProcess(processes:Processys[], idCtalg:number):Observable<any>{
     return (this.http.post<any>(`${this.api}process/${idCtalg}`, processes));
   }
   putProcess(idProcesses:number,processes:object):Observable<any>{

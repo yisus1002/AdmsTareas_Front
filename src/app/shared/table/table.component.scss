@@ -39,3 +39,7 @@ th{
 .mat-table {
   // background-color: rgba(255, 255, 255, 0);
 }
+:host ::ng-deep mat-checkbox label{ 
+  margin: 0;
+  height: 20px;
+}

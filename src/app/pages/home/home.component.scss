@@ -76,3 +76,22 @@ body {
   }
 
 }
+.opciones{ 
+  z-index: 6;
+  position: fixed;
+  top: 40px;
+
+  // top: 50%;
+  // left: 2%;
+  overflow: hidden;
+  max-height: 70vh;
+  // max-width: 40vh;
+  border-radius: 8px;
+  background-color: #ffff;
+  color: black;
+  // transform: translate(-50%, -50%);
+}
+.contai{ 
+  overflow: hidden;
+  max-height: 40vh;
+}
