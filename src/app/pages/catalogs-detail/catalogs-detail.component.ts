@@ -263,7 +263,7 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit, DoCheck {
     }
   
     
-   },900*tiempo)
+   },2000*tiempo)
    this.paused=!this.paused;
   }
   reset(){
