@@ -3,9 +3,66 @@
         <h1 class="text-center text-capitalize m-0">{{catalogDetail?.name}}</h1>
 
         <div class=" d-flex">
-            <button mat-raised-button class="text-capitalize" style="font-weight: bold;" >simulate</button>
+            <button (click)="simular()" [disabled]="round" mat-raised-button class="text-capitalize btn btn-primary" style="font-weight: bold;" >simulate</button>
+            <button (click)="reset()" *ngIf="report" mat-raised-button class="text-capitalize btn btn-success mx-2" style="font-weight: bold;" >Reset</button>
+        </div>
+
+        <div *ngIf="round" class="">
+          <h1 class=" text-center my-3 tracking-in-expand">Round Robin</h1>
+          <div class="container col-sm-12 col-md-10 col-lg-6">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name of process</th>
+                  <!-- <th scope="col">Priority</th> -->
+                  <th scope="col">State</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="scale-in-ver-top" *ngFor="let item of simulacion; let i = index">
+                  <td [class.bg-acua]="item?.estado==='ejecucion'" class="" style="font-weight: bold;">{{i+1}}</td>
+                  <td [class.bg-acua]="item?.estado==='ejecucion'" class="" style="font-weight: bold;">{{item?.nombreDeImagen}}</td>
+                  <!-- <td class="" style="font-weight: bold;">{{item?.prioridad}}</td> -->
+                  <td [class.bg-acua]="item?.estado==='ejecucion'" style="font-weight: bold;" 
+                      [class.text-success]="item?.estado==='terminado'"
+                      [class.text-danger]="item?.estado==='ejecucion'" 
+                      >{{item?.estado}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="report" class="container scale-in-ver-top">
+            <h1 class="text-center tracking-in-expand">Report</h1>
+            <div class="">
+              <table class="table">
+                
+                <thead>
+                  <tr>
+                    <th scope="col">P</th>
+                    <th scope="col">T.L</th>
+                    <th scope="col">R</th>
+                    <th scope="col">P.R</th>
+                    <th scope="col">T.R</th>
+                    <th scope="col">T.F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of simulacion;">
+                    <td>{{item?.nombreDeImagen}}</td>
+                    <td>{{item?.tiempoLLegada}}</td>
+                    <td>{{item?.rafaga}}</td>
+                    <td>{{item?.prioridad}}</td>
+                    <td>{{item?.turnaround | number:'.0-2'}}</td>
+                    <td>{{item?.tiempoFinalizacion | number:'.0-2'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
         <div class="">
+          <h1 class="my-1 text-center tracking-in-expand text-capitalize">processes</h1>
             <mat-form-field appearance="standard" >
                 <mat-label>Filter</mat-label>
                 <input  matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
@@ -97,6 +154,7 @@
                 ></mat-paginator>
             </div>
         </div>
+
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-import { finalize, map } from 'rxjs';
+import { finalize } from 'rxjs';
 import { Processes } from './../../models/interfaces/processes';
 import { AdmstareasService } from './../../services/admstareas.service';
 import { ControlersService } from './../../services/controlers.service';
@@ -41,6 +41,9 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
   public forma !:FormGroup;
   // public catalog: any[] = [];
 
+  simulacion:any[]=[];
+  round:boolean=false;
+  report:boolean=false;
   
   constructor( 
     public _sContr: ControlersService,
@@ -148,5 +151,121 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
     
   }
 
+  simular(){
+    this.round=true;
+    const simulador2 = (processesPrioridad:Processes[], listo:any[]) => {
+      let resp:any[] = [];
+      processesPrioridad.forEach((element,idx) => {
+          resp.push(...listo)
+          let rafaga = (Math.floor(Math.random() * (5000-1000+1)) +1000) * element?.nombreDeImagen.length;
+          let condicion = 1;
+          let cadena = element.nombreDeImagen.substr(0,Number(element.quantum)*condicion);
+          do {
+            cadena = element.nombreDeImagen.substr(0,Number(element.quantum)*condicion);
+            resp.push({
+              ...element,
+              estado: 'ejecucion',
+              cadena,
+              ejecucion: condicion,
+              tiempoLLegada: idx,
+              rafaga,
+            })
+            condicion++;
+          } while ( cadena !== element?.nombreDeImagen)
+            resp.push({
+              ...element,
+              estado: 'terminado',
+              cadena,
+              ejecuciones: condicion-1,
+              tiempoLLegada: idx,
+              tiempoFinalizacion: idx+(rafaga/1000),
+              rafaga,
+              turnaround: (idx+(rafaga/1000)) - idx
+            })
+            listo.splice(0,1)
+      });
+      return resp;
+    }
+    
+    const processesPrioridad:any[] = this.dataSource.data.sort((a:any,b:any)=> b.prioridad-a.prioridad)
+    const processLIsto             = this.dataSource.data.sort((a:any,b:any)=> b.prioridad-a.prioridad).map((element)=> { return {...element, estado: 'listo'} });
+    const resultado                = simulador2(processesPrioridad, processLIsto) ;
+    let   filtrar                  = (pid:any)=>resultado.filter((ele)=>parseInt(ele?.PID)===parseInt(pid));
+    const mayorNumero              = () => resultado.filter(element => element.estado === 'terminado');
+
+
+   let max            = 0;
+   let termi:any[]    = mayorNumero();
+   let proceAux:any[] = [];
+   let indices:any[]  = [];
+
+   for(let i =0; i< termi.length; i ++){ 
+    let aux = filtrar(termi[i]?.PID);
+        indices.push(aux.length)
+        proceAux.push(aux)
+    if(max < aux.length) {
+      max = aux.length;
+    }
+    
+  } 
+  proceAux.sort()
+  console.log(proceAux);
+  indices= indices.filter((ele)=>ele!= max)
+  indices.sort()
+  console.log(indices);
+  
+  
+    
+
+    let tiempo        = 1;
+    let cont          = -1;
+    let muestra:any[] = [];
+
+    let id            = setInterval(()=>{
+    cont ++;
+    if(max > cont){ 
+      muestra=[]
+      this.simulacion=muestra;
+      for(let i =0; i< proceAux.length; i ++){
+        if(proceAux[i][cont]){  
+          muestra.push(proceAux[i][cont]);
+          this.simulacion=muestra;
+        }else{
+          muestra.push(proceAux[i][proceAux[i].length -1]);
+          this.simulacion=muestra;
+          
+          // for(let j =0; j< indices.length; j ++){
+            // if(proceAux[i][indices[j]-1]){
+              // muestra.push(proceAux[i][indices[j]-1]);
+              // this.simulacion=muestra ;break;  
+            // } 
+          // }
+        }
+        
+      }
+      console.clear();
+      console.table(muestra);
+      
+      
+      console.log(cont);
+    }else{
+      clearInterval(id)
+      // let termi =mayorNumero();
+      console.log('Terminado');
+      // muestra=termi
+      this.simulacion=muestra; 
+      this.report=true;
+      console.table(this.simulacion); 
+      
+    }
+  
+    
+   },1000*tiempo)
+    
+  }
+  reset(){
+    this.report=false;
+    this.round=false;
+  }
 
 }
