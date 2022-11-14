@@ -16,6 +16,8 @@
                   <th scope="col">#</th>
                   <th scope="col">Name of process</th>
                   <!-- <th scope="col">Priority</th> -->
+                  <th scope="col">Executions</th>
+                  <th scope="col">String</th>
                   <th scope="col">State</th>
                 </tr>
               </thead>
@@ -24,10 +26,13 @@
                   <td [class.bg-acua]="item?.estado==='ejecucion'" class="" style="font-weight: bold;">{{i+1}}</td>
                   <td [class.bg-acua]="item?.estado==='ejecucion'" class="" style="font-weight: bold;">{{item?.nombreDeImagen}}</td>
                   <!-- <td class="" style="font-weight: bold;">{{item?.prioridad}}</td> -->
+                  <td [class.bg-acua]="item?.estado==='ejecucion'" class="" style="font-weight: bold;">{{item?.ejecucion || item?.ejecuciones}}</td>
+                  <td [class.bg-acua]="item?.estado==='ejecucion'" class="" style="font-weight: bold;">{{item?.cadena}}</td>
                   <td [class.bg-acua]="item?.estado==='ejecucion'" style="font-weight: bold;" 
-                      [class.text-success]="item?.estado==='terminado'"
-                      [class.text-danger]="item?.estado==='ejecucion'" 
-                      >{{item?.estado}}</td>
+                  [class.text-success]="item?.estado==='terminado'"
+                  [class.text-danger]="item?.estado==='ejecucion'" 
+                  [class.text-primary]="item?.estado==='listo'" 
+                  >{{item?.estado}}</td>
                 </tr>
               </tbody>
             </table>

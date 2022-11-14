@@ -260,7 +260,7 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
     }
   
     
-   },1000*tiempo)
+   },2000*tiempo)
     
   }
   reset(){
