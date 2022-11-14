@@ -3,7 +3,12 @@
         <h1 class="text-center text-capitalize m-0">{{catalogDetail?.name}}</h1>
 
         <div class=" d-flex">
-            <button (click)="simular()" [disabled]="round" mat-raised-button class="text-capitalize btn btn-primary" style="font-weight: bold;" >simulate</button>
+            <button (click)="simular()" [disabled]="report"  mat-raised-button class="text-capitalize btn btn-primary" style="font-weight: bold;" >
+              <span class="focus-in-expand" *ngIf="paused && !report"  >Start simulation <i class="fa-solid fa-play"></i></span>
+              <span class="focus-in-expand" *ngIf="!paused && !report" >Paused <i class="fa-solid fa-pause"></i></span>
+              <span class="focus-in-expand" *ngIf="report"  >Completed</span>
+            </button>
+            <!-- <button (click)="pause()"  mat-raised-button class="text-capitalize btn btn-danger mx-2" style="font-weight: bold;" >Paused</button> -->
             <button (click)="reset()" *ngIf="report" mat-raised-button class="text-capitalize btn btn-success mx-2" style="font-weight: bold;" >Reset</button>
         </div>
 

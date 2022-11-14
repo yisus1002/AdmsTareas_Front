@@ -2,7 +2,7 @@ import { finalize } from 'rxjs';
 import { Processes } from './../../models/interfaces/processes';
 import { AdmstareasService } from './../../services/admstareas.service';
 import { ControlersService } from './../../services/controlers.service';
-import { Component, OnInit, ViewChild, AfterViewInit, } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, DoCheck, } from '@angular/core';
 import { ActivatedRoute, } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './catalogs-detail.component.html',
   styleUrls: ['./catalogs-detail.component.scss']
 })
-export class CatalogsDetailComponent implements OnInit, AfterViewInit {
+export class CatalogsDetailComponent implements OnInit, AfterViewInit, DoCheck {
     displayedColumns:string[]=[	
                             "nombreDeImagen",
                             "PID",
@@ -39,12 +39,18 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
   public id_processes!:number;
   public catalogDetail:any;
   public forma !:FormGroup;
-  // public catalog: any[] = [];
+
+// --------------------------------------------------------------///
 
   simulacion:any[]=[];
   round:boolean=false;
   report:boolean=false;
-  
+  paused:boolean=true;
+  max:number=0;
+  cont:number=-1;
+  proceAux:any[]=[];
+
+
   constructor( 
     public _sContr: ControlersService,
     private _sAdms: AdmstareasService,
@@ -57,8 +63,10 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
     })
 
     this.createFor();
+    
    
   }
+  ngDoCheck(): void {}
 
   ngOnInit(): void {
      this._sContr.getCatalogs();
@@ -66,7 +74,9 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
 
   getCatalog(id:number){
     this._sAdms.getCataloogueById(id)
-    .pipe()
+    .pipe(finalize(()=>{
+      this.simulated();
+    }))
     .subscribe({
       next: ((data:any)=>{ 
         this.catalogDetail=data;
@@ -99,7 +109,7 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;  
   }
 
   applyFilter(event: Event) {
@@ -150,9 +160,9 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
     this.id_processes=idprocesses; 
     
   }
-
-  simular(){
-    this.round=true;
+  simulated(){
+    this.proceAux=[];
+    this.max=0;
     const simulador2 = (processesPrioridad:Processes[], listo:any[]) => {
       let resp:any[] = [];
       processesPrioridad.forEach((element,idx) => {
@@ -186,60 +196,43 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
       });
       return resp;
     }
-    
     const processesPrioridad:any[] = this.dataSource.data.sort((a:any,b:any)=> b.prioridad-a.prioridad)
     const processLIsto             = this.dataSource.data.sort((a:any,b:any)=> b.prioridad-a.prioridad).map((element)=> { return {...element, estado: 'listo'} });
     const resultado                = simulador2(processesPrioridad, processLIsto) ;
     let   filtrar                  = (pid:any)=>resultado.filter((ele)=>parseInt(ele?.PID)===parseInt(pid));
     const mayorNumero              = () => resultado.filter(element => element.estado === 'terminado');
 
-
-   let max            = 0;
-   let termi:any[]    = mayorNumero();
-   let proceAux:any[] = [];
-   let indices:any[]  = [];
-
-   for(let i =0; i< termi.length; i ++){ 
-    let aux = filtrar(termi[i]?.PID);
-        indices.push(aux.length)
-        proceAux.push(aux)
-    if(max < aux.length) {
-      max = aux.length;
-    }
-    
-  } 
-  proceAux.sort()
-  console.log(proceAux);
-  indices= indices.filter((ele)=>ele!= max)
-  indices.sort()
-  console.log(indices);
-  
-  
-    
+    let termi:any[]    = mayorNumero();
+ 
+    for(let i =0; i< termi.length; i ++){ 
+     let aux = filtrar(termi[i]?.PID);
+         this.proceAux.push(aux)
+     if(this.max < aux.length) {
+      this.max = aux.length;
+     }
+     
+   } 
+   console.log(this.proceAux);
+  }
+  simular(){
+    this.round=true;
 
     let tiempo        = 1;
-    let cont          = -1;
     let muestra:any[] = [];
 
     let id            = setInterval(()=>{
-    cont ++;
-    if(max > cont){ 
+    this.cont ++;
+    if((this.max > this.cont)&& (this.paused===false)){ 
       muestra=[]
       this.simulacion=muestra;
-      for(let i =0; i< proceAux.length; i ++){
-        if(proceAux[i][cont]){  
-          muestra.push(proceAux[i][cont]);
+      for(let i =0; i< this.proceAux.length; i ++){
+        if(this.proceAux[i][this.cont]){  
+          muestra.push(this.proceAux[i][this.cont]);
           this.simulacion=muestra;
         }else{
-          muestra.push(proceAux[i][proceAux[i].length -1]);
+          muestra.push(this.proceAux[i][this.proceAux[i].length -1]);
           this.simulacion=muestra;
-          
-          // for(let j =0; j< indices.length; j ++){
-            // if(proceAux[i][indices[j]-1]){
-              // muestra.push(proceAux[i][indices[j]-1]);
-              // this.simulacion=muestra ;break;  
-            // } 
-          // }
+
         }
         
       }
@@ -247,25 +240,41 @@ export class CatalogsDetailComponent implements OnInit, AfterViewInit {
       console.table(muestra);
       
       
-      console.log(cont);
-    }else{
+      console.log(this.cont);
+    } else if(this.max < this.cont){
       clearInterval(id)
-      // let termi =mayorNumero();
       console.log('Terminado');
-      // muestra=termi
       this.simulacion=muestra; 
       this.report=true;
       console.table(this.simulacion); 
       
+    }else if(this.paused===true){
+      clearInterval(id)
+      this.report=false; 
+      this.cont=this.cont;
+    }if((this.max < this.cont)&& (this.paused===true)){
+      clearInterval(id)
+      console.log('Terminado');
+      console.log(this.cont);
+      
+      this.simulacion=muestra; 
+      this.report=true;
+      console.table(this.simulacion); 
     }
   
     
-   },2000*tiempo)
-    
+   },900*tiempo)
+   this.paused=!this.paused;
   }
   reset(){
     this.report=false;
     this.round=false;
+    this.simulacion=[];
+    this.proceAux=[];
+    this.cont=-1;
+    this.max=0;
+    this.paused=!this.paused;
+    this.simulated();
   }
 
 }

@@ -120,6 +120,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 	-webkit-animation: scale-in-ver-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: scale-in-ver-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
+.focus-in-expand {
+	-webkit-animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: focus-in-expand 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
  @-webkit-keyframes slide-in-blurred-left {
     0% {
       -webkit-transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
@@ -216,3 +220,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     opacity: 1;
   }
 }
+ @-webkit-keyframes focus-in-expand {
+        0% {
+          letter-spacing: -0.5em;
+          -webkit-filter: blur(12px);
+                  filter: blur(12px);
+          opacity: 0;
+        }
+        100% {
+          -webkit-filter: blur(0px);
+                  filter: blur(0px);
+          opacity: 1;
+        }
+      }
+      @keyframes focus-in-expand {
+        0% {
+          letter-spacing: -0.5em;
+          -webkit-filter: blur(12px);
+                  filter: blur(12px);
+          opacity: 0;
+        }
+        100% {
+          -webkit-filter: blur(0px);
+                  filter: blur(0px);
+          opacity: 1;
+        }
+      }      
