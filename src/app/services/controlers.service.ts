@@ -13,11 +13,11 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class ControlersService {
 
-  public   datos: Processys[]=[];
-  public options:number[]=[];
-  public loading:boolean=false; 
-  public catalogo:any;
-  public catalogs:any[]=[];
+  public   datos  : Processys[]=[];
+  public options  : number[]=[];
+  public loading  : boolean=false; 
+  public catalogo : any;
+  public catalogs : any[]=[];
   
   public catalog: any[] = [];
   public forma !:FormGroup;
@@ -37,10 +37,24 @@ export class ControlersService {
     this._sAdms.getProcessys()
     .pipe(finalize(()=>{
       this.loading=true;
+      const da =this.dataSource.data.map(({PID, estado, nombreDeImagen, nombreDeSesion,nombreDeUsuario, numDeSesion, quantum, tiempoDeCpu, tituloDeVentana, usoDeMemoria, prioridad})=>({
+        'PID':PID,
+        'estado':estado,
+        'nombreDeImagen':nombreDeImagen,
+        'nombreDeSesion':nombreDeSesion,
+        'nombreDeUsuario':nombreDeUsuario,
+        'numDeSesion':numDeSesion,
+        'quantum':quantum,
+        'tiempoDeCpu':(tiempoDeCpu.length > 7)? ((parseInt(tiempoDeCpu.substring(0, 2))*3600)+(parseInt(tiempoDeCpu.substring(3, 5))*60)+(parseInt(tiempoDeCpu.substring(6, 8))) ).toString(): ((parseInt(tiempoDeCpu[0])*3600)+(parseInt(tiempoDeCpu.substring(2, 4))*60)+(parseInt(tiempoDeCpu.substring(5, 7))) ).toString(),
+        'tituloDeVentana':tituloDeVentana,
+        'prioridad':prioridad,
+        'usoDeMemoria':usoDeMemoria.substring(0,(usoDeMemoria.length -2)),
+      }));
+      this.dataSource.data=da;
     }))
     .subscribe({
       next: ((data:any)=>{ 
-        this.datos=data?.body?.response; 
+        this.datos=data?.body?.response;
         this.dataSource.data=this.datos; 
         this.options=[5,10,25, 100]
         this.options=[...this.options,(data?.body?.count)] 

@@ -10,6 +10,7 @@ export class Processes{
     tiempoDeCpu:  string;
     tituloDeVentana:  string;
     quantum: number;
+    prioridad:string;
     createdAt?: string;
     updatedAt?: string;
     deletedAt?: any;
@@ -32,6 +33,7 @@ export class Processes{
         tiempoDeCpu:  string,
         tituloDeVentana:  string,
         quantum: number,
+        prioridad:string,
         createdAt: string,
         updatedAt: string,
         deletedAt: any,
@@ -54,6 +56,7 @@ export class Processes{
         this.tiempoDeCpu = tiempoDeCpu;
         this.tituloDeVentana = tituloDeVentana;
         this.quantum = quantum;
+        this.prioridad=prioridad;
         this.createdAt=createdAt;
         this.updatedAt=updatedAt;
         this.deletedAt=deletedAt;

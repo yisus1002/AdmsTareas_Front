@@ -9,6 +9,7 @@ export class Processys{
     tiempoDeCpu:  string;
     tituloDeVentana:  string;
     quantum: number;
+    prioridad:string;
 
     constructor(
         nombreDeImagen:string,
@@ -21,6 +22,7 @@ export class Processys{
         tiempoDeCpu:  string,
         tituloDeVentana:  string,
         quantum: number,
+        prioridad:string,
     ){
         this.nombreDeImagen = nombreDeImagen;
         this.PID = PID;
@@ -32,5 +34,6 @@ export class Processys{
         this.tiempoDeCpu = tiempoDeCpu;
         this.tituloDeVentana = tituloDeVentana;
         this.quantum = quantum;
+        this.prioridad=prioridad;
     }
 }

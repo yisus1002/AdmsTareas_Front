@@ -110,7 +110,7 @@
                       
                       <ng-container matColumnDef="usoDeMemoria">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>MEMORY</th>
-                        <td mat-cell *matCellDef="let  processys"> {{ processys?.usoDeMemoria}} </td>
+                        <td mat-cell *matCellDef="let  processys"> {{ processys?.usoDeMemoria}} KB</td>
                       </ng-container>
 
                       <ng-container matColumnDef="estado">
@@ -130,7 +130,7 @@
                    
                       <ng-container matColumnDef="tiempoDeCpu">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>CPU</th>
-                        <td mat-cell *matCellDef="let  processys"> {{ processys?.tiempoDeCpu}} </td>
+                        <td mat-cell *matCellDef="let  processys"> {{ processys?.tiempoDeCpu}} s</td>
                       </ng-container>
                     
                       <ng-container matColumnDef="options">

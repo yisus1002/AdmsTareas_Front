@@ -1,8 +1,7 @@
 import { AdmstareasService } from './../../services/admstareas.service';
 import { ControlersService } from './../../services/controlers.service'; 
 import { Component,  OnInit} from '@angular/core';  
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { pipe } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -26,7 +25,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this._controService.listProcess();
     this._controService.getCatalogs();
-    
+    // setTimeout(()=>{
+      // this.ordenar('tiempoDeCpu');
+    // },1000)
   }
   reloadProcessys(){
     this._controService.ObtenerProccess();
@@ -73,5 +74,20 @@ export class HomeComponent implements OnInit {
     this.formu.reset({
       catalogueId: '',
     })
+  }
+
+
+  ordenar(filtro:any){
+    if(filtro==='quantum'){
+      this._controService.dataSource.data=this._controService.dataSource.data.sort((a:any,b:any)=> b?.quantum-a?.quantum)
+    }else if(filtro==='tiempoDeCpu'){
+      this._controService.dataSource.data=this._controService.dataSource.data.sort((a:any,b:any)=> b?.tiempoDeCpu-a?.tiempoDeCpu)
+    }else if(filtro==='usoDeMemoria'){
+      this._controService.dataSource.data=this._controService.dataSource.data.sort((a:any,b:any)=> b?.usoDeMemoria-a?.usoDeMemoria)
+    }
+    
+    return  console.log(this._controService.dataSource.data);
+    // return console.log(da);
+    
   }
 }
