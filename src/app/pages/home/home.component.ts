@@ -12,7 +12,12 @@ export class HomeComponent implements OnInit {
   public processesSelectany:any[]=[];
   
   public formu !:FormGroup;
-
+  public filtrar:any[]=[
+    {cod: 'quantum', name: 'Sort by wholesale quantum'},
+    {cod: 'tiempoDeCpu', name: 'Sort by wholesale cpu time'},
+    {cod: 'usoDeMemoria', name: 'Sort by wholesale memory usage'},
+    // {cod: '', name: ''},
+  ];
   constructor( private _Adms: AdmstareasService,
               public _controService: ControlersService, 
               private form: FormBuilder,

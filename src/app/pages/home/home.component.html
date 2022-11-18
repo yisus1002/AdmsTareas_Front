@@ -4,6 +4,18 @@
        <button  type="button"  class="m-2 d-flex flex-wrap order-1" mat-raised-button color="warn" (click)="reloadProcessys()" >Reload processes</button>
        <button  type="button"  class="m-2 d-flex flex-wrap order-2" mat-raised-button color="accent"  data-bs-toggle="modal" data-bs-target="#modalCreate" >Create a catalog</button>
      </div>
+ 
+       <div class="d-flex justify-content-end "> 
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Select a filter</mat-label>
+            <mat-select style="position: relative;" (selectionChange)="ordenar($event.value)" >
+              <mat-option  z-index="1056"  *ngFor="let filtro of filtrar" [value]="filtro?.cod">
+                {{filtro?.name}}
+              </mat-option>                 
+            </mat-select>  
+          </mat-form-field>
+      </div>  
+ 
       <app-loading *ngIf="_controService.loading===false"></app-loading>
       <app-table   *ngIf="_controService.loading"></app-table>
       <div *ngIf="_controService.seleccionProcess.length>0" class="opciones  shadow slide-in-blurred-left p-2  " >
